@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生词练习 — Bab 3 &amp; 4 · Latihan Harian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E9E4D6;
+    --paper-soft:#DED5C0;
+    --ink:#232019;
+    --ink-soft:#544B3E;
+    --ink-faint:#8E826B;
+    --seal:#6A4A8C;        /* purple seal for this combined set */
+    --seal-dark:#503570;
+    --accent:#C9892E;
+    --bamboo:#5F7A5C;
+    --rust:#A6442E;
+    --line:#CBBE9E;
+    --cream:#FAF6EC;
+    --l3:#3C6E8F;          /* Bab 3 blue */
+    --l4:#B5642C;          /* Bab 4 orange */
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 10% 5%, rgba(106,74,140,0.05), transparent 42%),
+      radial-gradient(circle at 90% 95%, rgba(201,137,46,0.05), transparent 42%);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  .hanzi{font-family:'Noto Serif SC', serif;}
+  .brush{font-family:'Ma Shan Zheng', cursive;}
+  .serif{font-family:'Spectral', serif;}
+
+  .topbar{position:sticky; top:0; z-index:50; background:rgba(233,228,214,0.94); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+  .topbar-inner{max-width:900px; margin:0 auto; padding:13px 20px; display:flex; align-items:center; justify-content:space-between; gap:14px;}
+  .brandblock{display:flex; align-items:baseline; gap:10px; min-width:0;}
+  .brandblock .hanzi{font-size:1.35rem; font-weight:700; letter-spacing:1px; white-space:nowrap;}
+  .brandblock .sub{font-size:0.71rem; color:var(--ink-soft); letter-spacing:0.03em;}
+  .seal-wrap{display:flex; align-items:center; gap:10px; flex:none;}
+  .seal{width:44px; height:44px; flex:none; background:var(--seal); color:var(--cream); display:flex; align-items:center; justify-content:center; font-family:'Noto Serif SC', serif; font-weight:700; font-size:1.05rem; border-radius:5px; box-shadow:0 1px 0 rgba(0,0,0,0.15) inset, 0 2px 5px rgba(80,53,112,0.35); transform:rotate(-3deg); transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+  .seal.stamped{transform:rotate(-3deg) scale(1.28);}
+
+  .tabs{max-width:900px; margin:0 auto; padding:0 20px 12px; display:flex; gap:8px; overflow-x:auto;}
+  .tab-btn{flex:none; font-size:0.82rem; font-weight:600; padding:7px 14px; border-radius:999px; border:1px solid var(--line); background:var(--cream); color:var(--ink-soft); cursor:pointer; transition:all .15s ease; white-space:nowrap;}
+  .tab-btn:hover{border-color:var(--ink-faint);}
+  .tab-btn.active{background:var(--ink); color:var(--cream); border-color:var(--ink);}
+  .tab-btn:focus-visible{outline:2px solid var(--seal); outline-offset:2px;}
+
+  main{max-width:900px; margin:0 auto; padding:24px 20px 80px;}
+  .panel{display:none;}
+  .panel.active{display:block; animation:fadein .25s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+  .section-head{display:flex; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap;}
+  .section-head h2{font-family:'Spectral',serif; font-size:1.3rem; margin:0; font-weight:600;}
+  .section-head .hanzi-tag{font-size:0.95rem; color:var(--ink-faint); margin-left:auto;}
+  .section-desc{font-size:0.85rem; color:var(--ink-soft); margin:6px 0 20px; line-height:1.5;}
+  .section-desc code{background:var(--paper-soft); padding:1px 6px; border-radius:4px;}
+
+  .card{border:1px solid var(--line); background:var(--cream); border-radius:12px; padding:24px; box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;}
+
+  /* ----- DAILY HERO ----- */
+  .daily-hero{
+    border-radius:14px; padding:26px 24px; margin-bottom:22px; color:var(--cream);
+    background:linear-gradient(135deg, var(--seal), var(--seal-dark));
+    position:relative; overflow:hidden;
+  }
+  .daily-hero .bigchar{
+    position:absolute; right:-10px; bottom:-30px; font-family:'Noto Serif SC',serif;
+    font-weight:900; font-size:11rem; line-height:1; opacity:0.13; pointer-events:none;
+  }
+  .daily-hero .eyebrow{font-size:0.74rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.85; margin-bottom:6px;}
+  .daily-hero .dateline{font-family:'Spectral',serif; font-size:1.5rem; font-weight:600; margin-bottom:4px;}
+  .daily-hero .day-cn{font-family:'Noto Serif SC',serif; font-size:1.05rem; opacity:0.9;}
+  .daily-hero .blurb{font-size:0.84rem; opacity:0.9; margin-top:14px; max-width:60ch; line-height:1.5; position:relative; z-index:1;}
+  .word-of-day{
+    margin-top:18px; display:inline-flex; align-items:center; gap:14px;
+    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);
+    padding:12px 18px; border-radius:10px; position:relative; z-index:1;
+  }
+  .word-of-day .wod-hz{font-family:'Noto Serif SC',serif; font-size:2.1rem; font-weight:700;}
+  .word-of-day .wod-py{font-size:0.95rem; opacity:0.9;}
+  .word-of-day .wod-id{font-size:0.82rem; opacity:0.8;}
+  .word-of-day button{margin-left:6px; width:38px; height:38px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.6); background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center;}
+  .word-of-day button svg{width:17px; height:17px; fill:var(--cream);}
+
+  /* ----- SETS / FILTERS ----- */
+  .filter-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; align-items:center;}
+  .chip-toggle{font-size:0.8rem; font-weight:600; padding:7px 14px; border-radius:999px; border:1.5px solid var(--line); background:var(--cream); color:var(--ink-soft); cursor:pointer; transition:all .12s ease;}
+  .chip-toggle.on[data-set="l3"]{background:var(--l3); color:#fff; border-color:var(--l3);}
+  .chip-toggle.on[data-set="l4"]{background:var(--l4); color:#fff; border-color:var(--l4);}
+  .filter-label{font-size:0.78rem; color:var(--ink-faint); margin-right:2px;}
+
+  /* ----- FLASHCARDS ----- */
+  .flash-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:10px;}
+  .flash{border:1.5px solid var(--line); border-radius:10px; background:var(--paper); padding:14px 8px; text-align:center; cursor:pointer; min-height:104px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; transition:all .15s ease; position:relative;}
+  .flash:hover{border-color:var(--ink); transform:translateY(-2px);}
+  .flash .badge{position:absolute; top:7px; left:7px; width:8px; height:8px; border-radius:50%;}
+  .flash[data-l="l3"] .badge{background:var(--l3);}
+  .flash[data-l="l4"] .badge{background:var(--l4);}
+  .flash .hz{font-family:'Noto Serif SC',serif; font-size:1.55rem; font-weight:600;}
+  .flash .py{font-size:0.78rem; color:var(--ink-soft); display:none;}
+  .flash .id{font-size:0.74rem; color:var(--seal); display:none; margin-top:1px;}
+  .flash.flipped .py, .flash.flipped .id{display:block;}
+  .flash.flipped .hz{font-size:1.15rem; color:var(--ink-faint);}
+  .flash-hint{text-align:center; font-size:0.78rem; color:var(--ink-faint); margin:14px 0 0;}
+
+  /* ----- QUIZ ----- */
+  .progress-line{display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--ink-faint); margin-bottom:14px;}
+  .prompt-box{display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; min-height:90px; text-align:center; margin-bottom:20px;}
+  .prompt-big{font-family:'Noto Serif SC',serif; font-size:2.6rem; font-weight:600; line-height:1.1;}
+  .prompt-sub{font-size:1.05rem; color:var(--ink-soft);}
+  .speak-btn{width:40px; height:40px; border-radius:50%; border:1.5px solid var(--ink); background:var(--cream); display:flex; align-items:center; justify-content:center; cursor:pointer; flex:none; transition:all .15s ease;}
+  .speak-btn:hover{background:var(--ink);}
+  .speak-btn:hover svg{fill:var(--cream);}
+  .speak-btn svg{width:18px; height:18px; fill:var(--ink);}
+  .speak-btn:focus-visible{outline:2px solid var(--seal); outline-offset:2px;}
+  .options{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:18px;}
+  @media(max-width:480px){.options{grid-template-columns:1fr;}}
+  .opt-btn{font-size:0.95rem; font-weight:500; padding:13px 16px; border-radius:8px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); cursor:pointer; text-align:center; transition:all .12s ease;}
+  .opt-btn .hanzi{font-size:1.3rem;}
+  .opt-btn:hover:not(:disabled){border-color:var(--ink); transform:translateY(-1px);}
+  .opt-btn:focus-visible{outline:2px solid var(--seal); outline-offset:2px;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.correct{background:rgba(95,122,92,0.18); border-color:var(--bamboo); color:var(--bamboo);}
+  .opt-btn.wrong{background:rgba(166,68,46,0.13); border-color:var(--rust); color:var(--rust);}
+  .feedback{min-height:24px; font-size:0.88rem; font-weight:600; margin-bottom:14px; text-align:center;}
+  .feedback.ok{color:var(--bamboo);}
+  .feedback.bad{color:var(--rust);}
+  .actions{display:flex; justify-content:center; gap:10px; flex-wrap:wrap;}
+  .btn{font-size:0.85rem; font-weight:600; padding:10px 22px; border-radius:999px; border:none; cursor:pointer; background:var(--ink); color:var(--cream); transition:all .15s ease;}
+  .btn:hover{background:var(--seal-dark);}
+  .btn.ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--line);}
+  .btn.ghost:hover{border-color:var(--ink); color:var(--ink);}
+  .btn:focus-visible{outline:2px solid var(--seal); outline-offset:2px;}
+  .quiz-mode-row{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+  .mode-btn{font-size:0.78rem; font-weight:600; padding:6px 13px; border-radius:7px; border:1.5px solid var(--line); background:var(--cream); color:var(--ink-soft); cursor:pointer;}
+  .mode-btn.on{background:var(--ink); color:var(--cream); border-color:var(--ink);}
+  .done-box{text-align:center; padding:18px 0;}
+  .done-box .hanzi{font-size:2rem; margin-bottom:6px;}
+  .done-box p{color:var(--ink-soft); font-size:0.92rem;}
+
+  /* ----- DUEL (two players) ----- */
+  .duel-setup{display:flex; flex-direction:column; gap:16px;}
+  .name-inputs{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:520px){.name-inputs{grid-template-columns:1fr;}}
+  .name-field label{display:block; font-size:0.78rem; color:var(--ink-soft); margin-bottom:6px; font-weight:600;}
+  .name-field input{width:100%; padding:11px 14px; border-radius:8px; border:1.5px solid var(--line); background:var(--paper); font-size:0.95rem; font-family:'Inter'; color:var(--ink);}
+  .name-field input:focus{outline:2px solid var(--seal); outline-offset:1px;}
+  .duel-config{display:flex; gap:18px; flex-wrap:wrap; align-items:center; font-size:0.82rem; color:var(--ink-soft);}
+  .duel-config select{padding:8px 10px; border-radius:7px; border:1.5px solid var(--line); background:var(--paper); font-family:'Inter'; color:var(--ink);}
+  .turn-banner{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; border-radius:10px; margin-bottom:18px; color:#fff;}
+  .turn-banner.p1{background:linear-gradient(135deg,var(--l3),#2c5670);}
+  .turn-banner.p2{background:linear-gradient(135deg,var(--l4),#8f4d20);}
+  .turn-banner .who{font-family:'Spectral',serif; font-size:1.15rem; font-weight:600;}
+  .turn-banner .scores{font-size:0.82rem; opacity:0.92; text-align:right; line-height:1.4;}
+  .scoreboard{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px;}
+  .score-card{border:1.5px solid var(--line); border-radius:10px; padding:16px; text-align:center; background:var(--paper);}
+  .score-card.lead{border-width:2px;}
+  .score-card.p1.lead{border-color:var(--l3);}
+  .score-card.p2.lead{border-color:var(--l4);}
+  .score-card .nm{font-weight:700; font-size:0.95rem; margin-bottom:4px;}
+  .score-card .pts{font-family:'Spectral',serif; font-size:2.2rem; font-weight:600;}
+  .score-card.p1 .pts{color:var(--l3);}
+  .score-card.p2 .pts{color:var(--l4);}
+  .score-card .lbl{font-size:0.72rem; color:var(--ink-faint);}
+  .winner-line{text-align:center; font-family:'Spectral',serif; font-size:1.3rem; font-weight:600; margin:20px 0 6px;}
+
+  footer{text-align:center; font-size:0.74rem; color:var(--ink-faint); padding:20px; border-top:1px solid var(--line);}
+  .legend{display:inline-flex; align-items:center; gap:5px; font-size:0.74rem; color:var(--ink-faint); margin-left:10px;}
+  .legend .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brandblock">
+      <span class="hanzi">生词练习</span>
+      <div>
+        <div class="sub" style="font-weight:700; color:var(--ink); font-size:0.8rem;">Bab 3 &amp; 4 · Kosakata</div>
+        <div class="sub">明天见 · 你去哪儿 — 汉语教程 Buku 1</div>
+      </div>
+    </div>
+    <div class="seal-wrap">
+      <div class="seal" id="seal">学</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="daily">㊐ 每天 Harian</button>
+    <button class="tab-btn" data-tab="cards">㊀ 词卡 Flashcard</button>
+    <button class="tab-btn" data-tab="quiz">㊁ 测验 Kuis</button>
+    <button class="tab-btn" data-tab="duel">㊁ 对战 Duel Berdua</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ PANEL: DAILY ============ -->
+  <section class="panel active" data-panel="daily">
+    <div class="daily-hero">
+      <span class="bigchar hanzi" id="hero-bigchar">学</span>
+      <div class="eyebrow">Latihan Harian · 每日练习</div>
+      <div class="dateline" id="hero-date">—</div>
+      <div class="day-cn hanzi" id="hero-daycn">—</div>
+      <div class="blurb">Setiap hari kalian dapat <b>10 kata pilihan</b> dari Bab 3 &amp; 4 — berputar otomatis berdasarkan tanggal, jadi kamu dan temanmu melihat set yang sama bila berlatih di hari yang sama. Pelajari kartunya, lalu uji di tab Kuis atau tantang teman di Duel Berdua.</div>
+      <div class="word-of-day" id="wod">
+        <div>
+          <div class="wod-hz hanzi" id="wod-hz">—</div>
+        </div>
+        <div>
+          <div class="wod-py" id="wod-py">—</div>
+          <div class="wod-id" id="wod-id">Kata hari ini</div>
+        </div>
+        <button onclick="speak(DAILY.wod.hz)" aria-label="Putar"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Set Hari Ini</h2>
+      <span class="hanzi-tag">10 个词</span>
+    </div>
+    <p class="section-desc">Klik kartu untuk membuka arti &amp; mendengar bunyinya. Besok set ini berganti otomatis.</p>
+    <div class="flash-grid" id="daily-grid"></div>
+    <div class="actions" style="margin-top:22px;">
+      <button class="btn" onclick="switchTab('quiz')">Lanjut ke Kuis →</button>
+      <button class="btn ghost" onclick="switchTab('duel')">Tantang Teman ⚔</button>
+    </div>
+  </section>
+
+  <!-- ============ PANEL: FLASHCARDS ============ -->
+  <section class="panel" data-panel="cards">
+    <div class="section-head">
+      <h2>Semua Kosakata</h2>
+      <span class="hanzi-tag hanzi">词卡</span>
+    </div>
+    <p class="section-desc">Seluruh kosakata Bab 3 &amp; 4. Saring per bab, klik kartu untuk membalik.
+      <span class="legend"><span class="dot" style="background:var(--l3)"></span>Bab 3</span>
+      <span class="legend"><span class="dot" style="background:var(--l4)"></span>Bab 4</span>
+    </p>
+    <div class="filter-row">
+      <span class="filter-label">Tampilkan:</span>
+      <button class="chip-toggle on" data-set="l3" onclick="CARDS.toggle('l3', this)">Bab 3 (明天见)</button>
+      <button class="chip-toggle on" data-set="l4" onclick="CARDS.toggle('l4', this)">Bab 4 (你去哪儿)</button>
+    </div>
+    <div class="flash-grid" id="cards-grid"></div>
+    <div class="flash-hint">↑ klik kartu untuk membuka / menutup arti</div>
+  </section>
+
+  <!-- ============ PANEL: QUIZ ============ -->
+  <section class="panel" data-panel="quiz">
+    <div class="section-head">
+      <h2>Kuis Kosakata</h2>
+      <span class="hanzi-tag hanzi">测验</span>
+    </div>
+    <p class="section-desc">Pilih mode &amp; cakupan, lalu jawab 10 soal pilihan ganda.</p>
+    <div class="quiz-mode-row" id="quiz-modes">
+      <button class="mode-btn on" data-mode="hz2id" onclick="QUIZ.setMode('hz2id',this)">汉字 → arti</button>
+      <button class="mode-btn" data-mode="id2hz" onclick="QUIZ.setMode('id2hz',this)">arti → 汉字</button>
+      <button class="mode-btn" data-mode="hz2py" onclick="QUIZ.setMode('hz2py',this)">汉字 → pinyin</button>
+      <button class="mode-btn" data-mode="audio" onclick="QUIZ.setMode('audio',this)">🔊 dengar → 汉字</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Cakupan:</span>
+      <button class="chip-toggle on" data-set="l3" onclick="QUIZ.toggleScope('l3',this)">Bab 3</button>
+      <button class="chip-toggle on" data-set="l4" onclick="QUIZ.toggleScope('l4',this)">Bab 4</button>
+      <button class="chip-toggle" data-set="daily" onclick="QUIZ.toggleScope('daily',this)" style="border-color:var(--seal); color:var(--seal);">★ Set Harian</button>
+    </div>
+    <div class="card">
+      <div class="progress-line"><span id="qz-progress">Soal 1 / 10</span><span id="qz-score">Benar: 0</span></div>
+      <div class="prompt-box">
+        <button class="speak-btn" id="qz-speak" onclick="QUIZ.play()" aria-label="Putar"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+        <div class="prompt-big" id="qz-display">?</div>
+      </div>
+      <div class="options" id="qz-options"></div>
+      <div class="feedback" id="qz-feedback"></div>
+      <div class="actions" id="qz-actions"></div>
+    </div>
+    <div class="actions" style="margin-top:16px;">
+      <button class="btn ghost" onclick="QUIZ.init()">Mulai Ulang Kuis ↺</button>
+    </div>
+  </section>
+
+  <!-- ============ PANEL: DUEL ============ -->
+  <section class="panel" data-panel="duel">
+    <div class="section-head">
+      <h2>Duel Berdua</h2>
+      <span class="hanzi-tag hanzi">对战</span>
+    </div>
+    <p class="section-desc">Mode bergiliran untuk kamu dan teman di satu perangkat. Setiap pemain menjawab soal yang sama secara bergantian — siapa benar terbanyak, menang.</p>
+
+    <div id="duel-setup-wrap" class="card">
+      <div class="duel-setup">
+        <div class="name-inputs">
+          <div class="name-field">
+            <label>Pemain 1 (kamu)</label>
+            <input id="p1name" type="text" value="Pemain 1" maxlength="14">
+          </div>
+          <div class="name-field">
+            <label>Pemain 2 (teman)</label>
+            <input id="p2name" type="text" value="Pemain 2" maxlength="14">
+          </div>
+        </div>
+        <div class="duel-config">
+          <label>Mode:
+            <select id="duel-mode">
+              <option value="hz2id">汉字 → arti</option>
+              <option value="id2hz">arti → 汉字</option>
+              <option value="hz2py">汉字 → pinyin</option>
+              <option value="audio">🔊 dengar → 汉字</option>
+            </select>
+          </label>
+          <label>Jumlah ronde:
+            <select id="duel-rounds">
+              <option value="6">6</option>
+              <option value="10" selected>10</option>
+              <option value="14">14</option>
+            </select>
+          </label>
+          <label>Cakupan:
+            <select id="duel-scope">
+              <option value="all">Bab 3 + 4</option>
+              <option value="l3">Bab 3 saja</option>
+              <option value="l4">Bab 4 saja</option>
+              <option value="daily">Set Harian</option>
+            </select>
+          </label>
+        </div>
+        <div class="actions" style="justify-content:flex-start;">
+          <button class="btn" onclick="DUEL.start()">Mulai Duel ⚔</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="duel-play-wrap" style="display:none;">
+      <div class="turn-banner p1" id="duel-banner">
+        <div class="who" id="duel-who">—</div>
+        <div class="scores" id="duel-scores">—</div>
+      </div>
+      <div class="card">
+        <div class="progress-line"><span id="du-progress">Ronde 1</span><span id="du-mode-lbl"></span></div>
+        <div class="prompt-box">
+          <button class="speak-btn" id="du-speak" onclick="DUEL.play()" aria-label="Putar"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+          <div class="prompt-big" id="du-display">?</div>
+        </div>
+        <div class="options" id="du-options"></div>
+        <div class="feedback" id="du-feedback"></div>
+        <div class="actions" id="du-actions"></div>
+      </div>
+      <div id="duel-end" style="display:none;"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Kosakata dari 第三课「明天见」&amp; 第四课「你去哪儿」— 汉语教程 (Hanyu Jiaocheng) Jilid 1, 杨寄洲 主编 · Hanzi Sederhana · Pinyin resmi · suara zh-CN (RRC). Untuk belajar mandiri.
+</footer>
+
+<script>
+/* ============== DATA ============== */
+const WORDS = [
+  // ---- Bab 3: 明天见 ----
+  {hz:'学', py:'xué', id:'belajar', l:'l3'},
+  {hz:'英语', py:'Yīngyǔ', id:'bahasa Inggris', l:'l3'},
+  {hz:'阿拉伯语', py:'Ālābóyǔ', id:'bahasa Arab', l:'l3'},
+  {hz:'德语', py:'Déyǔ', id:'bahasa Jerman', l:'l3'},
+  {hz:'俄语', py:'Éyǔ', id:'bahasa Rusia', l:'l3'},
+  {hz:'法语', py:'Fǎyǔ', id:'bahasa Prancis', l:'l3'},
+  {hz:'韩国语', py:'Hánguóyǔ', id:'bahasa Korea', l:'l3'},
+  {hz:'日语', py:'Rìyǔ', id:'bahasa Jepang', l:'l3'},
+  {hz:'西班牙语', py:'Xībānyáyǔ', id:'bahasa Spanyol', l:'l3'},
+  {hz:'对', py:'duì', id:'benar; betul', l:'l3'},
+  {hz:'明天', py:'míngtiān', id:'besok', l:'l3'},
+  {hz:'见', py:'jiàn', id:'bertemu; melihat', l:'l3'},
+  {hz:'去', py:'qù', id:'pergi', l:'l3'},
+  {hz:'邮局', py:'yóujú', id:'kantor pos', l:'l3'},
+  {hz:'寄', py:'jì', id:'mengirim (pos)', l:'l3'},
+  {hz:'信', py:'xìn', id:'surat', l:'l3'},
+  {hz:'银行', py:'yínháng', id:'bank', l:'l3'},
+  {hz:'取', py:'qǔ', id:'mengambil', l:'l3'},
+  {hz:'钱', py:'qián', id:'uang', l:'l3'},
+  {hz:'六', py:'liù', id:'enam', l:'l3'},
+  {hz:'七', py:'qī', id:'tujuh', l:'l3'},
+  {hz:'九', py:'jiǔ', id:'sembilan', l:'l3'},
+  {hz:'北京', py:'Běijīng', id:'Beijing', l:'l3'},
+  // ---- Bab 4: 你去哪儿 ----
+  {hz:'今天', py:'jīntiān', id:'hari ini', l:'l4'},
+  {hz:'天', py:'tiān', id:'hari', l:'l4'},
+  {hz:'昨天', py:'zuótiān', id:'kemarin', l:'l4'},
+  {hz:'星期', py:'xīngqī', id:'minggu (pekan)', l:'l4'},
+  {hz:'星期一', py:'xīngqīyī', id:'Senin', l:'l4'},
+  {hz:'星期二', py:'xīngqī’èr', id:'Selasa', l:'l4'},
+  {hz:'星期三', py:'xīngqīsān', id:'Rabu', l:'l4'},
+  {hz:'星期四', py:'xīngqīsì', id:'Kamis', l:'l4'},
+  {hz:'星期五', py:'xīngqīwǔ', id:'Jumat', l:'l4'},
+  {hz:'星期六', py:'xīngqīliù', id:'Sabtu', l:'l4'},
+  {hz:'星期天', py:'xīngqītiān', id:'Minggu (hari)', l:'l4'},
+  {hz:'几', py:'jǐ', id:'berapa', l:'l4'},
+  {hz:'二', py:'èr', id:'dua', l:'l4'},
+  {hz:'三', py:'sān', id:'tiga', l:'l4'},
+  {hz:'四', py:'sì', id:'empat', l:'l4'},
+  {hz:'哪儿', py:'nǎr', id:'di mana', l:'l4'},
+  {hz:'那儿', py:'nàr', id:'di sana', l:'l4'},
+  {hz:'我', py:'wǒ', id:'saya; aku', l:'l4'},
+  {hz:'回', py:'huí', id:'kembali', l:'l4'},
+  {hz:'学校', py:'xuéxiào', id:'sekolah', l:'l4'},
+  {hz:'再见', py:'zàijiàn', id:'sampai jumpa', l:'l4'},
+  {hz:'对不起', py:'duìbuqǐ', id:'maaf', l:'l4'},
+  {hz:'没关系', py:'méi guānxi', id:'tidak apa-apa', l:'l4'},
+  {hz:'天安门', py:'Tiān’ānmén', id:'Tian’anmen', l:'l4'}
+];
+
+/* ============== HELPERS ============== */
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function sample(arr,n){ return shuffle(arr).slice(0,n); }
+function pickDistractors(pool, correct, n){ return sample(pool.filter(x=>x!==correct), n); }
+
+let zhVoice=null;
+function loadVoice(){ const v=window.speechSynthesis?window.speechSynthesis.getVoices():[]; zhVoice=v.find(x=>x.lang&&x.lang.toLowerCase().startsWith('zh'))||null; }
+if(window.speechSynthesis){ loadVoice(); window.speechSynthesis.onvoiceschanged=loadVoice; }
+function speak(text){ if(!window.speechSynthesis)return; window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='zh-CN'; if(zhVoice)u.voice=zhVoice; u.rate=0.85; window.speechSynthesis.speak(u); }
+
+function stampSeal(){ const s=document.getElementById('seal'); s.classList.remove('stamped'); void s.offsetWidth; s.classList.add('stamped'); setTimeout(()=>s.classList.remove('stamped'),320); }
+
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.dataset.panel===tab));
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+
+function makeFlash(w){
+  const c=document.createElement('div'); c.className='flash'; c.dataset.l=w.l;
+  c.innerHTML='<span class="badge"></span><div class="hz">'+w.hz+'</div><div class="py">'+w.py+'</div><div class="id">'+w.id+'</div>';
+  c.onclick=()=>{ c.classList.toggle('flipped'); speak(w.hz); };
+  return c;
+}
+
+/* ============== DAILY ============== */
+const DAILY = {
+  set:[], wod:null,
+  dayIndex(){
+    // days since epoch — same for everyone on the same calendar day (local)
+    const now=new Date();
+    const days=Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()))/86400000);
+    return days;
+  },
+  seededShuffle(arr, seed){
+    // deterministic shuffle from a seed so everyone gets the same daily set
+    const a=arr.slice(); let s=seed*2654435761 % 2147483647; if(s<=0)s+=2147483646;
+    const rnd=()=>{ s=s*16807%2147483647; return (s-1)/2147483646; };
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+    return a;
+  },
+  build(){
+    const di=this.dayIndex();
+    this.set=this.seededShuffle(WORDS, di).slice(0,10);
+    this.wod=this.set[di % this.set.length];
+    this.render();
+  },
+  render(){
+    const now=new Date();
+    const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const daysId=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const daysCn=['星期天','星期一','星期二','星期三','星期四','星期五','星期六'];
+    document.getElementById('hero-date').textContent = daysId[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+    document.getElementById('hero-daycn').textContent = '今天 '+daysCn[now.getDay()];
+    document.getElementById('wod-hz').textContent=this.wod.hz;
+    document.getElementById('wod-py').textContent=this.wod.py;
+    document.getElementById('wod-id').textContent=this.wod.id;
+    document.getElementById('hero-bigchar').textContent=this.wod.hz.charAt(0);
+    const grid=document.getElementById('daily-grid'); grid.innerHTML='';
+    this.set.forEach(w=>grid.appendChild(makeFlash(w)));
+  }
+};
+
+/* ============== CARDS ============== */
+const CARDS = {
+  show:{l3:true, l4:true},
+  toggle(set, btn){ this.show[set]=!this.show[set]; btn.classList.toggle('on', this.show[set]); this.render(); },
+  render(){
+    const grid=document.getElementById('cards-grid'); grid.innerHTML='';
+    WORDS.filter(w=>this.show[w.l]).forEach(w=>grid.appendChild(makeFlash(w)));
+  }
+};
+
+/* ============== SCOPE RESOLVER ============== */
+function resolveScope(scope){
+  if(scope==='all') return WORDS.slice();
+  if(scope==='daily') return DAILY.set.slice();
+  return WORDS.filter(w=>w.l===scope);
+}
+
+/* ============== QUIZ ENGINE (shared) ============== */
+function buildQuestion(word, mode, pool){
+  // returns {promptHTML, sub, speakText, correct, options:[{label, value}], showSpeak}
+  let promptHTML, sub='', speakText=word.hz, correct, opts, showSpeak=false;
+  if(mode==='hz2id'){
+    promptHTML='<span class="hanzi">'+word.hz+'</span>'; sub=word.py; correct=word.id;
+    opts=shuffle([word.id, ...pickDistractors(pool.map(w=>w.id), word.id, 3)]).map(v=>({label:v, value:v}));
+  } else if(mode==='id2hz'){
+    promptHTML=word.id; correct=word.hz;
+    opts=shuffle([word.hz, ...pickDistractors(pool.map(w=>w.hz), word.hz, 3)]).map(v=>({label:'<span class="hanzi">'+v+'</span>', value:v}));
+  } else if(mode==='hz2py'){
+    promptHTML='<span class="hanzi">'+word.hz+'</span>'; correct=word.py;
+    opts=shuffle([word.py, ...pickDistractors(pool.map(w=>w.py), word.py, 3)]).map(v=>({label:v, value:v}));
+  } else { // audio
+    promptHTML='🔊'; sub='(dengarkan)'; correct=word.hz; showSpeak=true;
+    opts=shuffle([word.hz, ...pickDistractors(pool.map(w=>w.hz), word.hz, 3)]).map(v=>({label:'<span class="hanzi">'+v+'</span>', value:v}));
+  }
+  return {promptHTML, sub, speakText, correct, opts, showSpeak, word};
+}
+
+const QUIZ = {
+  mode:'hz2id', scope:{l3:true,l4:true,daily:false},
+  qs:[], idx:0, correct:0,
+  setMode(m, btn){ this.mode=m; document.querySelectorAll('#quiz-modes .mode-btn').forEach(b=>b.classList.toggle('on', b.dataset.mode===m)); this.init(); },
+  toggleScope(set, btn){
+    if(set==='daily'){ // daily is exclusive-ish: turning it on uses daily set only
+      this.scope.daily=!this.scope.daily; btn.classList.toggle('on', this.scope.daily);
+    } else {
+      this.scope[set]=!this.scope[set]; btn.classList.toggle('on', this.scope[set]);
+    }
+    this.init();
+  },
+  pool(){
+    if(this.scope.daily) return DAILY.set.slice();
+    let p=[]; if(this.scope.l3) p=p.concat(WORDS.filter(w=>w.l==='l3')); if(this.scope.l4) p=p.concat(WORDS.filter(w=>w.l==='l4'));
+    return p.length? p : WORDS.slice();
+  },
+  init(){
+    const pool=this.pool();
+    const n=Math.min(10, pool.length);
+    this.words=sample(pool, n);
+    this.idx=0; this.correct=0;
+    this.render();
+  },
+  current(){ return this.words[this.idx]; },
+  play(){ speak(this.current().hz); },
+  render(){
+    const pool=this.pool();
+    const q=buildQuestion(this.current(), this.mode, pool);
+    document.getElementById('qz-progress').textContent='Soal '+(this.idx+1)+' / '+this.words.length;
+    document.getElementById('qz-score').textContent='Benar: '+this.correct;
+    document.getElementById('qz-display').innerHTML=q.promptHTML;
+    document.getElementById('qz-speak').style.display = q.showSpeak ? 'flex' : 'none';
+    const fb=document.getElementById('qz-feedback'); fb.textContent=''; fb.className='feedback';
+    document.getElementById('qz-actions').innerHTML='';
+    const wrap=document.getElementById('qz-options'); wrap.innerHTML='';
+    q.opts.forEach(o=>{ const b=document.createElement('button'); b.className='opt-btn'; b.innerHTML=o.label; b.dataset.val=o.value;
+      b.onclick=()=>this.answer(o.value, q, b, wrap); wrap.appendChild(b); });
+    if(q.showSpeak) speak(this.current().hz);
+  },
+  answer(picked, q, btn, wrap){
+    const ok=picked===q.correct;
+    wrap.querySelectorAll('button').forEach(b=>{ b.disabled=true; if(b.dataset.val===q.correct) b.classList.add('correct'); else if(b===btn) b.classList.add('wrong'); });
+    const fb=document.getElementById('qz-feedback');
+    if(ok){ this.correct++; fb.innerHTML='✅ Benar! <span class="hanzi">'+q.word.hz+'</span> '+q.word.py+' — '+q.word.id; fb.className='feedback ok'; stampSeal(); speak(q.word.hz); }
+    else { fb.innerHTML='❌ Jawaban: <span class="hanzi">'+q.word.hz+'</span> '+q.word.py+' — '+q.word.id; fb.className='feedback bad'; }
+    document.getElementById('qz-score').textContent='Benar: '+this.correct;
+    const a=document.getElementById('qz-actions');
+    if(this.idx<this.words.length-1){ const nb=document.createElement('button'); nb.className='btn'; nb.textContent='Soal Berikutnya →'; nb.onclick=()=>{this.idx++; this.render();}; a.appendChild(nb); }
+    else {
+      const s=document.createElement('div'); s.className='done-box';
+      const pct=Math.round(this.correct/this.words.length*100);
+      s.innerHTML='<div class="hanzi">完 成！</div><p>'+this.correct+' / '+this.words.length+' benar ('+pct+'%)</p>';
+      document.getElementById('qz-options').after(s);
+      const rb=document.createElement('button'); rb.className='btn'; rb.textContent='Ulangi ↺'; rb.onclick=()=>{ s.remove(); this.init(); }; a.appendChild(rb);
+    }
+  }
+};
+
+/* ============== DUEL ENGINE ============== */
+const DUEL = {
+  p1:'', p2:'', mode:'hz2id', rounds:10, scopeWords:[],
+  questions:[], qIdx:0, turn:0, // turn 0 = p1, 1 = p2
+  scores:[0,0], answeredThisQ:[false,false],
+  start(){
+    this.p1=(document.getElementById('p1name').value||'Pemain 1').trim();
+    this.p2=(document.getElementById('p2name').value||'Pemain 2').trim();
+    this.mode=document.getElementById('duel-mode').value;
+    this.rounds=parseInt(document.getElementById('duel-rounds').value,10);
+    const scope=document.getElementById('duel-scope').value;
+    let pool = scope==='all'? WORDS.slice() : (scope==='daily'? DAILY.set.slice() : WORDS.filter(w=>w.l===scope));
+    if(pool.length<4){ pool=WORDS.slice(); }
+    // build one question word per round (each player answers the SAME word)
+    const words=[];
+    let bag=shuffle(pool);
+    for(let i=0;i<this.rounds;i++){ if(bag.length===0) bag=shuffle(pool); words.push(bag.pop()); }
+    this.questions=words;
+    this.qIdx=0; this.turn=0; this.scores=[0,0]; this.answeredThisQ=[false,false];
+    document.getElementById('duel-setup-wrap').style.display='none';
+    document.getElementById('duel-play-wrap').style.display='block';
+    document.getElementById('duel-end').style.display='none';
+    document.getElementById('du-mode-lbl').textContent={hz2id:'汉字→arti',id2hz:'arti→汉字',hz2py:'汉字→pinyin',audio:'🔊→汉字'}[this.mode];
+    this.render();
+  },
+  curWord(){ return this.questions[this.qIdx]; },
+  curName(){ return this.turn===0? this.p1 : this.p2; },
+  play(){ speak(this.curWord().hz); },
+  render(){
+    const word=this.curWord();
+    const q=buildQuestion(word, this.mode, this.scopeWords.length?this.scopeWords:WORDS);
+    this._q=q;
+    const banner=document.getElementById('duel-banner');
+    banner.className='turn-banner '+(this.turn===0?'p1':'p2');
+    document.getElementById('duel-who').textContent='Giliran: '+this.curName();
+    document.getElementById('duel-scores').innerHTML=this.p1+': <b>'+this.scores[0]+'</b> &nbsp;·&nbsp; '+this.p2+': <b>'+this.scores[1]+'</b>';
+    document.getElementById('du-progress').textContent='Ronde '+(this.qIdx+1)+' / '+this.rounds;
+    document.getElementById('du-display').innerHTML=q.promptHTML;
+    document.getElementById('du-speak').style.display = q.showSpeak ? 'flex' : 'none';
+    const fb=document.getElementById('du-feedback'); fb.textContent=''; fb.className='feedback';
+    document.getElementById('du-actions').innerHTML='';
+    const wrap=document.getElementById('du-options'); wrap.innerHTML='';
+    q.opts.forEach(o=>{ const b=document.createElement('button'); b.className='opt-btn'; b.innerHTML=o.label; b.dataset.val=o.value;
+      b.onclick=()=>this.answer(o.value, q, b, wrap); wrap.appendChild(b); });
+    if(q.showSpeak) speak(word.hz);
+  },
+  answer(picked, q, btn, wrap){
+    const ok=picked===q.correct;
+    wrap.querySelectorAll('button').forEach(b=>{ b.disabled=true; if(b.dataset.val===q.correct) b.classList.add('correct'); else if(b===btn) b.classList.add('wrong'); });
+    if(ok){ this.scores[this.turn]++; stampSeal(); }
+    const fb=document.getElementById('du-feedback');
+    fb.innerHTML=(ok?'✅ ':'❌ ')+this.curName()+': '+(ok?'benar!':'kurang tepat.')+' <span class="hanzi">'+q.word.hz+'</span> '+q.word.py+' — '+q.word.id;
+    fb.className='feedback '+(ok?'ok':'bad');
+    speak(q.word.hz);
+    document.getElementById('duel-scores').innerHTML=this.p1+': <b>'+this.scores[0]+'</b> &nbsp;·&nbsp; '+this.p2+': <b>'+this.scores[1]+'</b>';
+    const a=document.getElementById('du-actions');
+    const nb=document.createElement('button'); nb.className='btn';
+    // advance: p1 then p2 on same word, then next word
+    if(this.turn===0){
+      nb.textContent='Giliran '+this.p2+' →';
+      nb.onclick=()=>{ this.turn=1; this.render(); };
+    } else {
+      const last = this.qIdx>=this.rounds-1;
+      nb.textContent= last ? 'Lihat Hasil 🏆' : 'Ronde Berikutnya →';
+      nb.onclick=()=>{ if(last){ this.finish(); } else { this.qIdx++; this.turn=0; this.render(); } };
+    }
+    a.appendChild(nb);
+  },
+  finish(){
+    document.getElementById('duel-play-wrap').querySelector('.card').style.display='none';
+    document.getElementById('duel-banner').style.display='none';
+    const end=document.getElementById('duel-end'); end.style.display='block';
+    const s1=this.scores[0], s2=this.scores[1];
+    let lead1=s1>=s2, lead2=s2>=s1;
+    let winLine;
+    if(s1>s2) winLine='🏆 '+this.p1+' menang!';
+    else if(s2>s1) winLine='🏆 '+this.p2+' menang!';
+    else winLine='🤝 Seri! '+s1+' sama '+s2;
+    end.innerHTML=
+      '<div class="winner-line">'+winLine+'</div>'+
+      '<div class="scoreboard">'+
+        '<div class="score-card p1 '+(s1>s2?'lead':'')+'"><div class="nm">'+this.p1+'</div><div class="pts">'+s1+'</div><div class="lbl">dari '+this.rounds+' ronde</div></div>'+
+        '<div class="score-card p2 '+(s2>s1?'lead':'')+'"><div class="nm">'+this.p2+'</div><div class="pts">'+s2+'</div><div class="lbl">dari '+this.rounds+' ronde</div></div>'+
+      '</div>'+
+      '<div class="actions" style="margin-top:22px;">'+
+        '<button class="btn" onclick="DUEL.again()">Main Lagi ⚔</button>'+
+        '<button class="btn ghost" onclick="DUEL.backToSetup()">Ubah Pengaturan</button>'+
+      '</div>';
+  },
+  again(){
+    document.getElementById('duel-play-wrap').querySelector('.card').style.display='block';
+    document.getElementById('duel-banner').style.display='flex';
+    this.start();
+  },
+  backToSetup(){
+    document.getElementById('duel-play-wrap').style.display='none';
+    document.getElementById('duel-play-wrap').querySelector('.card').style.display='block';
+    document.getElementById('duel-banner').style.display='flex';
+    document.getElementById('duel-setup-wrap').style.display='block';
+  }
+};
+
+/* ============== INIT ============== */
+DAILY.build();
+CARDS.render();
+QUIZ.init();
+</script>
+</body>
+</html>
